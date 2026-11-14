@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Job Application Copilot</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h2>✦ Career Copilot</h2>
+
+    <nav>
+        <a href="#analyzer">Resume Analyzer</a>
+        <a href="#tracker">Application Tracker</a>
+    </nav>
+</header>
+
+<section class="hero">
+
+    <h1>AI Job Application Copilot</h1>
+
+    <p>
+        Analyze your resume, identify skill gaps
+        and improve your job applications.
+    </p>
+
+</section>
+
+<main>
+
+<section id="analyzer">
+
+    <h2>Resume Match Analyzer</h2>
+
+    <label>Your Resume</label>
+
+    <textarea id="resume"
+        placeholder="Paste your resume here..."></textarea>
+
+    <label>Job Description</label>
+
+    <textarea id="jobDescription"
+        placeholder="Paste job description here..."></textarea>
+
+    <button onclick="analyzeResume()">
+        Analyze Resume
+    </button>
+
+    <div id="results"></div>
+
+    <button onclick="generateResume()">
+        Generate Tailored Resume
+    </button>
+
+    <pre id="tailoredResume"></pre>
+
+</section>
+
+<section id="tracker">
+
+    <h2>Application Tracker</h2>
+
+    <input id="company" placeholder="Company Name">
+
+    <input id="position" placeholder="Job Position">
+
+    <select id="status">
+        <option>Applied</option>
+        <option>Interview</option>
+        <option>Offer</option>
+        <option>Rejected</option>
+    </select>
+
+    <button onclick="addApplication()">
+        Add Application
+    </button>
+
+    <div id="applications"></div>
+
+</section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>
