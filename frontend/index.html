@@ -1,93 +1,152 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AI Job Application Copilot</title>
-
+    <title>Career Copilot</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-    <h2>✦ Career Copilot</h2>
+<div class="layout">
 
-    <nav>
-        <a href="#analyzer">Resume Analyzer</a>
-        <a href="#tracker">Application Tracker</a>
-    </nav>
-</header>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">✦</span>
+            <div>
+                <strong>Career Copilot</strong>
+                <small>Your AI job assistant</small>
+            </div>
+        </div>
 
-<section class="hero">
+        <nav class="nav">
+            <a href="#home" class="active">🏠 <span>Home</span></a>
+            <a href="#analyzer">📊 <span>Resume Analyzer</span></a>
+            <a href="#tailor">📝 <span>Tailored Resume</span></a>
+            <a href="#tracker">📌 <span>Application Tracker</span></a>
+        </nav>
 
-    <h1>AI Job Application Copilot</h1>
+        <div class="sidebar-tip">
+            <strong>Tip</strong>
+            <p>Paste the full job description for the most accurate skill match.</p>
+        </div>
+    </aside>
 
-    <p>
-        Analyze your resume, identify skill gaps
-        and improve your job applications.
-    </p>
+    <!-- MAIN -->
+    <main class="main">
 
-</section>
+        <!-- TOP BAR -->
+        <header class="topbar" id="home">
+            <h1 id="greeting">Good Morning 👋</h1>
+            <span class="pill">AI-powered by Groq</span>
+        </header>
 
-<main>
+        <!-- HERO / INTRO -->
+        <section class="banner">
+            <span class="banner-icon">✦</span>
+            <div>
+                <h2>AI Job Application Copilot</h2>
+                <p>Analyze your resume, find skill gaps, and track every job you apply to.</p>
+            </div>
+        </section>
 
-<section id="analyzer">
+        <div class="grid">
 
-    <h2>Resume Match Analyzer</h2>
+            <!-- ANALYZER INPUT -->
+            <section class="card" id="analyzer">
+                <div class="card-head">
+                    <h3>Resume Match Analyzer</h3>
+                </div>
 
-    <label>Your Resume</label>
+                <label for="resume">Your Resume</label>
+                <textarea id="resume" rows="7" placeholder="Paste your resume here..."></textarea>
 
-    <textarea id="resume"
-        placeholder="Paste your resume here..."></textarea>
+                <label for="jobDescription">Job Description</label>
+                <textarea id="jobDescription" rows="7" placeholder="Paste job description here..."></textarea>
 
-    <label>Job Description</label>
+                <div class="btn-row">
+                    <button class="btn primary" onclick="analyzeResume()">Analyze Resume</button>
+                    <button class="btn ghost" onclick="generateResume()">Generate Tailored Resume</button>
+                </div>
+            </section>
 
-    <textarea id="jobDescription"
-        placeholder="Paste job description here..."></textarea>
+            <!-- SCORE / RESULTS -->
+            <section class="card">
+                <div class="card-head">
+                    <h3>Resume Score Analyzer</h3>
+                </div>
 
-    <button onclick="analyzeResume()">
-        Analyze Resume
-    </button>
+                <div id="results">
+                    <div class="empty">
+                        Run an analysis to see your match score, strong skills, missing skills and improvement tips.
+                    </div>
+                </div>
+            </section>
 
-    <div id="results"></div>
+            <!-- TRACKER OVERVIEW -->
+            <section class="card" id="tracker">
+                <div class="card-head">
+                    <h3>Application Tracker</h3>
+                </div>
 
-    <button onclick="generateResume()">
-        Generate Tailored Resume
-    </button>
+                <div class="tracker">
+                    <div class="donut" id="donut">
+                        <div class="donut-center">
+                            <strong id="donutTotal">0</strong>
+                            <span>Total</span>
+                        </div>
+                    </div>
 
-    <pre id="tailoredResume"></pre>
+                    <ul class="legend" id="legend"></ul>
+                </div>
+            </section>
 
-</section>
+            <!-- ADD APPLICATION -->
+            <section class="card">
+                <div class="card-head">
+                    <h3>Add Application</h3>
+                </div>
 
-<section id="tracker">
+                <label for="company">Company</label>
+                <input id="company" type="text" placeholder="e.g. Google">
 
-    <h2>Application Tracker</h2>
+                <label for="position">Position</label>
+                <input id="position" type="text" placeholder="e.g. Frontend Developer">
 
-    <input id="company" placeholder="Company Name">
+                <label for="status">Status</label>
+                <select id="status">
+                    <option value="Applied">Applied</option>
+                    <option value="Interview">Interview</option>
+                    <option value="Offer">Offer</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
 
-    <input id="position" placeholder="Job Position">
+                <button class="btn primary full" onclick="addApplication()">Save Application</button>
+                <p class="hint">The current match score from your last analysis is saved with it.</p>
+            </section>
 
-    <select id="status">
-        <option>Applied</option>
-        <option>Interview</option>
-        <option>Offer</option>
-        <option>Rejected</option>
-    </select>
+        </div>
 
-    <button onclick="addApplication()">
-        Add Application
-    </button>
+        <!-- TAILORED RESUME -->
+        <section class="card wide" id="tailor">
+            <div class="card-head">
+                <h3>Tailored Resume</h3>
+            </div>
+            <pre id="tailoredResume" class="tailored">Click "Generate Tailored Resume" and your AI-tailored resume will appear here.</pre>
+        </section>
 
-    <div id="applications"></div>
+        <!-- APPLICATION LIST -->
+        <section class="card wide">
+            <div class="card-head">
+                <h3>Your Applications</h3>
+            </div>
+            <div id="applications" class="app-grid"></div>
+        </section>
 
-</section>
-
-</main>
+    </main>
+</div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
