@@ -1,3 +1,4 @@
+const API_URL = "https://ai-job-application-pbl.onrender.com";
 
 let currentMatch = 0;
 
@@ -12,7 +13,7 @@ async function analyzeResume() {
 
     try {
 
-        const response = await fetch("/api/analyze", {
+        const response = await fetch(`${API_URL}/api/analyze`, {
 
             method: "POST",
 
@@ -70,7 +71,7 @@ async function generateResume() {
 
     try {
 
-        const response = await fetch("/api/tailor-resume", {
+        const response = await fetch(`${API_URL}/api/tailor-resume`, {
 
             method: "POST",
 
@@ -119,33 +120,39 @@ async function addApplication() {
         return;
     }
 
-    const response = await fetch("/api/applications", {
+    try {
 
-        method: "POST",
+        const response = await fetch(`${API_URL}/api/applications`, {
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+            method: "POST",
 
-        body: JSON.stringify({
-            company,
-            position,
-            matchPercentage: currentMatch,
-            status
-        })
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-    });
+            body: JSON.stringify({
+                company,
+                position,
+                matchPercentage: currentMatch,
+                status
+            })
 
-    const data = await response.json();
+        });
 
-    if (!response.ok) {
-        alert(data.message);
-        return;
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message);
+            return;
+        }
+
+        alert("Application saved!");
+
+        loadApplications();
+
+    } catch (error) {
+        alert("Unable to save application.");
     }
-
-    alert("Application saved!");
-
-    loadApplications();
 
 }
 
@@ -153,30 +160,36 @@ async function addApplication() {
 
 async function loadApplications() {
 
-    const response = await fetch("/api/applications");
+    try {
 
-    const applications = await response.json();
+        const response = await fetch(`${API_URL}/api/applications`);
 
-    document.getElementById("applications").innerHTML =
-        applications.map(app => `
+        const applications = await response.json();
 
-            <div class="application">
+        document.getElementById("applications").innerHTML =
+            applications.map(app => `
 
-                <h3>${app.company}</h3>
+                <div class="application">
 
-                <p>Position: ${app.position}</p>
+                    <h3>${app.company}</h3>
 
-                <p>Match: ${app.matchPercentage}%</p>
+                    <p>Position: ${app.position}</p>
 
-                <p>Status: ${app.status}</p>
+                    <p>Match: ${app.matchPercentage}%</p>
 
-                <button onclick="deleteApplication(${app.id})">
-                    Delete
-                </button>
+                    <p>Status: ${app.status}</p>
 
-            </div>
+                    <button onclick="deleteApplication(${app.id})">
+                        Delete
+                    </button>
 
-        `).join("");
+                </div>
+
+            `).join("");
+
+    } catch (error) {
+        console.error("Unable to load applications:", error);
+    }
 
 }
 
@@ -184,11 +197,17 @@ async function loadApplications() {
 
 async function deleteApplication(id) {
 
-    await fetch(`/api/applications/${id}`, {
-        method: "DELETE"
-    });
+    try {
 
-    loadApplications();
+        await fetch(`${API_URL}/api/applications/${id}`, {
+            method: "DELETE"
+        });
+
+        loadApplications();
+
+    } catch (error) {
+        alert("Unable to delete application.");
+    }
 
 }
 
